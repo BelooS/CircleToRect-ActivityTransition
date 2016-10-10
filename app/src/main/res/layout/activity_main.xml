@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.beloo.circlerectbitmapanimator.MainActivity"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        app:title="@string/first_activity"
+        app:titleTextColor="@android:color/white"
+        android:background="?colorPrimary"
+        />
+
+    <com.example.beloo.circlerectbitmapanimator.view.CircleRectView
+        android:id="@+id/circleView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:transitionName="@string/circle"
+        app:circleRadius="25dp"
+        android:src="@drawable/picture"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        />
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.beloo.circlerectbitmapanimator.MainActivity"
+    android:visibility="visible"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        app:title="@string/second_activity"
+        app:titleTextColor="@android:color/white"
+        android:background="?colorPrimary"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:actionBarSize">
+
+        <com.example.beloo.circlerectbitmapanimator.view.CircleRectView
+            android:id="@+id/circleView"
+            android:transitionName="@string/circle"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:circleRadius="25dp"
+            android:src="@drawable/picture"
+            android:scaleType="centerCrop"
+            tools:visibility="visible"
+            />
+
+    </FrameLayout>
+
+</RelativeLayout>
