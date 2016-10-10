@@ -1,5 +1,4 @@
 # CircleToRect Transition <img src="https://www.cleveroad.com/public/comercial/label-android.svg" height="19">
-![Header image](/images/header.png)
 
 ## This is sample with custom activity shared views transition
 
