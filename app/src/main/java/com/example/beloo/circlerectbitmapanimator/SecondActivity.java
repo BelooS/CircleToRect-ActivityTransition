@@ -33,8 +33,6 @@ public class SecondActivity extends AppCompatActivity {
         root = findViewById(R.id.root);
         view.setTag("SECOND");
 
-        view.setOnClickListener(v -> view.animator(250, 600, 150, 150).setDuration(1500).start());
-
 //        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 //            @Override
 //            public boolean onPreDraw() {
