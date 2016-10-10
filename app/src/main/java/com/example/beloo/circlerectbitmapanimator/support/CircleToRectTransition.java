@@ -55,8 +55,6 @@ public class CircleToRectTransition extends Transition {
             return null;
         }
 
-        Log.w("create animator", "start view tag = " + startValues.view.getTag() + " end view tag = " + endValues.view.getTag());
-
         CircleRectView view = (CircleRectView) (startValues.view);
 
         Rect startRect = (Rect) startValues.values.get(BOUNDS);
@@ -66,9 +64,6 @@ public class CircleToRectTransition extends Transition {
 
         //scale animator
         animator = view.animator(startRect.height(), startRect.width(), endRect.height(), endRect.width());
-
-        Log.d("adsf", "end rect left = " + endRect.left);
-        Log.d("adsf", "end rect top = " + endRect.top);
 
         //movement animators below
         //if some translation not performed fully, use it instead of start coordinate
@@ -87,10 +82,5 @@ public class CircleToRectTransition extends Transition {
 
         //prevent blinking when interrupt animation
         return new NoPauseAnimator(animatorSet);
-    }
-
-
-    private boolean isReveal(Rect startRect, Rect endRect) {
-        return startRect.width() < endRect.width();
     }
 }

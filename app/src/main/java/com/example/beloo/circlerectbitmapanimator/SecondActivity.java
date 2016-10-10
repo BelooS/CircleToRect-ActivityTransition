@@ -32,22 +32,10 @@ public class SecondActivity extends AppCompatActivity {
         view = (CircleRectView) findViewById(R.id.circleView);
         root = findViewById(R.id.root);
         view.setTag("SECOND");
-
-//        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                view.getViewTreeObserver().removeOnPreDrawListener(this);
-//                view.animator(500, root.getWidth()).start();
-//                root.setVisibility(View.VISIBLE);
-//                view.setVisibility(View.VISIBLE);
-//                return true;
-//            }
-//        });
     }
 
     @Override
     public void onBackPressed() {
         supportFinishAfterTransition();
-//        overridePendingTransition(0, 0);
     }
 }

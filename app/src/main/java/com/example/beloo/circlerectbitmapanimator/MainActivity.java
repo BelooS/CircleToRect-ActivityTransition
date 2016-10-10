@@ -28,10 +28,7 @@ public class MainActivity extends AppCompatActivity {
         view = (CircleRectView) findViewById(R.id.circleView);
 
         view.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, SecondActivity.class)
-//                    .addFlags(FLAG_ACTIVITY_NO_ANIMATION);
             Intent intent = new Intent(this, SecondActivity.class);
-//                    .addFlags(FLAG_ACTIVITY_NO_ANIMATION);
             ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view, getString(R.string.circle));
 
             ActivityCompat.startActivity(MainActivity.this, intent , transitionActivityOptions.toBundle());

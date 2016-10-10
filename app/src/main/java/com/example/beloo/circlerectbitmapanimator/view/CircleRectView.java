@@ -48,6 +48,17 @@ public class CircleRectView extends ImageView {
         init(a);
     }
 
+    private void init(TypedArray a) {
+        if (a.hasValue(R.styleable.CircleRectView_circleRadius)) {
+            circleRadius = a.getDimensionPixelSize(R.styleable.CircleRectView_circleRadius, 0);
+            cornerRadius = circleRadius;
+        }
+
+        clipPath = new Path();
+
+        a.recycle();
+    }
+
     public Animator animator(int rectHeight, int rectWidth) {
         return animator(getMeasuredHeight(), getMeasuredWidth(), rectHeight, rectWidth);
     }
@@ -109,19 +120,6 @@ public class CircleRectView extends ImageView {
         parent.layout(parent.getLeft(), parent.getTop(), parent.getRight(), parent.getBottom());
     }
 
-    private void init(TypedArray a) {
-        LinearInterpolator linearInterpolator = new LinearInterpolator();
-
-        if (a.hasValue(R.styleable.CircleRectView_circleRadius)) {
-            circleRadius = a.getDimensionPixelSize(R.styleable.CircleRectView_circleRadius, 0);
-            cornerRadius = circleRadius;
-        }
-
-        clipPath = new Path();
-
-        a.recycle();
-    }
-
     @Override
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -130,12 +128,6 @@ public class CircleRectView extends ImageView {
         Log.d("size changed", "w = " + w + " h = " + h);
 
         bitmapRect = new RectF(0, 0, w, h);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
     }
 
     @Override
