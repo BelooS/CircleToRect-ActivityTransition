@@ -55,10 +55,10 @@ public class CircleRectView extends ImageView {
     public Animator animator(int startHeight, int startWidth, int endHeight, int endWidth) {
         AnimatorSet animatorSet = new AnimatorSet();
 
-        Log.d(CircleRectView.class.getSimpleName(), "startHeight =" + startHeight
-                + ", startWidth =" + startWidth
-                + ", endHeight = " + endHeight
-                + " endWidth =" + endWidth);
+//        Log.d(CircleRectView.class.getSimpleName(), "startHeight =" + startHeight
+//                + ", startWidth =" + startWidth
+//                + ", endHeight = " + endHeight
+//                + " endWidth =" + endWidth);
 
         ValueAnimator heightAnimator = ValueAnimator.ofInt(startHeight, endHeight);
         ValueAnimator widthAnimator = ValueAnimator.ofInt(startWidth, endWidth);
@@ -68,7 +68,7 @@ public class CircleRectView extends ImageView {
             ViewGroup.LayoutParams layoutParams = getLayoutParams();
             layoutParams.height = val;
 
-            Log.d(CircleRectView.class.getSimpleName(), "height updated =" + val);
+//            Log.d(CircleRectView.class.getSimpleName(), "height updated =" + val);
 
             setLayoutParams(layoutParams);
             requestLayoutSupport();
@@ -127,7 +127,7 @@ public class CircleRectView extends ImageView {
         super.onSizeChanged(w, h, oldw, oldh);
         //This event-method provides the real dimensions of this custom view.
 
-        Log.d("size changed", "w = " + w + " h = " + h);
+//        Log.d("size changed", "w = " + w + " h = " + h);
 
         bitmapRect = new RectF(0, 0, w, h);
     }
@@ -151,8 +151,8 @@ public class CircleRectView extends ImageView {
             return;
         }
 
-        Log.d("onDraw", "rect = " + bitmapRect);
-        Log.d("onDraw", "cornerRadius = " + cornerRadius);
+//        Log.d("onDraw", "rect = " + bitmapRect);
+//        Log.d("onDraw", "cornerRadius = " + cornerRadius);
 
         clipPath.reset();
         clipPath.addRoundRect(bitmapRect, cornerRadius, cornerRadius, Path.Direction.CW);

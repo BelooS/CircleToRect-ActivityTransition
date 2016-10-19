@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.animation.LinearInterpolator;
 
 import com.example.beloo.circlerectbitmapanimator.support.CircleToRectTransition;
 import com.example.beloo.circlerectbitmapanimator.view.CircleRectView;
@@ -33,18 +30,6 @@ public class SecondActivity extends AppCompatActivity {
         root = findViewById(R.id.root);
         view.setTag("SECOND");
 
-        view.setOnClickListener(v -> view.animator(250, 600, 150, 150).setDuration(1500).start());
-
-//        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                view.getViewTreeObserver().removeOnPreDrawListener(this);
-//                view.animator(500, root.getWidth()).start();
-//                root.setVisibility(View.VISIBLE);
-//                view.setVisibility(View.VISIBLE);
-//                return true;
-//            }
-//        });
     }
 
     @Override

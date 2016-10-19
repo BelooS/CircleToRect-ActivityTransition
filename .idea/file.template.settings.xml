@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExportableFileTemplateSettings">
+    <code_templates>
+      <template name="JUnit4 Test Class.java" reformat="true" live-template-enabled="true" enabled="true" />
+      <template name="JUnit4 Test Method.java" reformat="true" live-template-enabled="true" enabled="true" />
+    </code_templates>
+  </component>
+</project>

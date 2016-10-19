@@ -16,6 +16,7 @@ import com.example.beloo.circlerectbitmapanimator.view.CircleRectView;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class CircleToRectTransition extends Transition {
+    private static final String TAG = CircleToRectTransition.class.getSimpleName();
     private static final String BOUNDS = "viewBounds";
     private static final String[] PROPS = {BOUNDS};
 
@@ -55,8 +56,6 @@ public class CircleToRectTransition extends Transition {
             return null;
         }
 
-        Log.w("create animator", "start view tag = " + startValues.view.getTag() + " end view tag = " + endValues.view.getTag());
-
         CircleRectView view = (CircleRectView) (startValues.view);
 
         Rect startRect = (Rect) startValues.values.get(BOUNDS);
@@ -67,30 +66,35 @@ public class CircleToRectTransition extends Transition {
         //scale animator
         animator = view.animator(startRect.height(), startRect.width(), endRect.height(), endRect.width());
 
-        Log.d("adsf", "end rect left = " + endRect.left);
-        Log.d("adsf", "end rect top = " + endRect.top);
+        Log.i(TAG, "--------- start animation ------");
+        Log.d(TAG, "start rect left = " + startRect.left);
+        Log.d(TAG, "start rect top = " + startRect.top);
+        Log.d(TAG, "end rect left = " + endRect.left);
+        Log.d(TAG, "end rect top = " + endRect.top);
 
         //movement animators below
         //if some translation not performed fully, use it instead of start coordinate
-        int moveX = Math.round(view.getTranslationX()) == 0 ? startRect.left : Math.round(view.getTranslationX());
-        int moveY = Math.round(view.getTranslationY()) == 0 ? startRect.top : Math.round(view.getTranslationY());
+        float startX = startRect.left + view.getTranslationX();
+        float startY = startRect.top + view.getTranslationY();
+
+        Log.w(TAG, "xFrom " + startX);
+        Log.w(TAG, "yFrom " + startY);
 
         //somehow end rect returns needed value minus translation in case not finished transition available
-        int moveXTo = Math.round(view.getTranslationX()) == 0 ? endRect.left : endRect.left + Math.round(view.getTranslationX());
-        int moveYTo = Math.round(view.getTranslationY()) == 0 ? endRect.top : endRect.top + Math.round(view.getTranslationY());
+        float moveXTo = endRect.left + Math.round(view.getTranslationX());
+        float moveYTo = endRect.top + Math.round(view.getTranslationY());
 
-        Animator moveXAnimator = ObjectAnimator.ofFloat(view, "translationX", moveX, moveXTo);
-        Animator moveYAnimator = ObjectAnimator.ofFloat(view, "translationY", moveY, moveYTo);
+        Log.w(TAG, "moveXTo " + moveXTo);
+        Log.w(TAG, "moveYTo " + moveYTo);
+
+        Animator moveXAnimator = ObjectAnimator.ofFloat(view, "x", startX, moveXTo);
+        Animator moveYAnimator = ObjectAnimator.ofFloat(view, "y", startY, moveYTo);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(moveXAnimator, moveYAnimator, animator);
+        animatorSet.playTogether(animator, moveXAnimator, moveYAnimator);
 
         //prevent blinking when interrupt animation
         return new NoPauseAnimator(animatorSet);
     }
 
-
-    private boolean isReveal(Rect startRect, Rect endRect) {
-        return startRect.width() < endRect.width();
-    }
 }
