@@ -24,7 +24,7 @@
         android:transitionName="@string/circle"
         app:circleRadius="25dp"
         android:src="@drawable/picture"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
         android:scaleType="centerCrop"
         />
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.beloo.circlerectbitmapanimator;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
 import android.transition.Transition;
 import android.view.View;
 
@@ -17,10 +18,10 @@ public class SecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Transition transition = new CircleToRectTransition();
-            transition.setDuration(1500);
-            getWindow().setSharedElementEnterTransition(transition);
-            getWindow().setSharedElementExitTransition(new CircleToRectTransition().setDuration(1500));
+            ChangeBounds bounds = new ChangeBounds();
+            bounds.setDuration(1500);
+            getWindow().setSharedElementEnterTransition(bounds);
+            getWindow().setSharedElementExitTransition(bounds);
         }
 
         super.onCreate(savedInstanceState);

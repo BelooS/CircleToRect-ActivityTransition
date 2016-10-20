@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         view.setOnClickListener(v -> {
             Intent intent = new Intent(this, SecondActivity.class);
             ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, view, getString(R.string.circle));
-
             ActivityCompat.startActivity(MainActivity.this, intent , transitionActivityOptions.toBundle());
         });
 
