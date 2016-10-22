@@ -6,11 +6,17 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -22,9 +28,11 @@ import android.widget.ImageView;
 import com.example.beloo.circlerectbitmapanimator.R;
 
 public class CircleRectView extends ImageView {
+    private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 
     private int circleRadius;
     private float cornerRadius;
+    private float eps = 0.001F;
 
     private RectF bitmapRect;
     private Path clipPath;
@@ -130,6 +138,29 @@ public class CircleRectView extends ImageView {
         bitmapRect = new RectF(0, 0, w, h);
     }
 
+
+    private Bitmap getBitmapFromDrawable(Drawable drawable) {
+        if (drawable == null) {
+            return null;
+        }
+
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        try {
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -143,11 +174,18 @@ public class CircleRectView extends ImageView {
             return;
         }
 
-//        Log.d("onDraw", "rect = " + bitmapRect);
-//        Log.d("onDraw", "cornerRadius = " + cornerRadius);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
 
         clipPath.reset();
-        clipPath.addRoundRect(bitmapRect, cornerRadius, cornerRadius, Path.Direction.CW);
+        if (Math.abs(cornerRadius + cornerRadius - bitmapRect.height()) < eps) {
+            clipPath.addCircle(bitmapRect.centerX(), bitmapRect.centerY(), cornerRadius, Path.Direction.CW);
+        } else {
+            clipPath.addRoundRect(bitmapRect, cornerRadius, cornerRadius, Path.Direction.CW);
+        }
+
         canvas.clipPath(clipPath);
         super.onDraw(canvas);
     }
