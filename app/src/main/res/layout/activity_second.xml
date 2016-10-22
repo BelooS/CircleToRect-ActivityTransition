@@ -30,7 +30,6 @@
             android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            app:circleRadius="25dp"
             android:src="@drawable/picture"
             android:scaleType="centerCrop"
             tools:visibility="visible"

@@ -57,6 +57,11 @@ public class CircleRectView extends ImageView {
     }
 
     private void init(TypedArray a) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
+
         if (a.hasValue(R.styleable.CircleRectView_circleRadius)) {
             circleRadius = a.getDimensionPixelSize(R.styleable.CircleRectView_circleRadius, 0);
             cornerRadius = circleRadius;
@@ -74,10 +79,10 @@ public class CircleRectView extends ImageView {
     public Animator animator(int startHeight, int startWidth, int endHeight, int endWidth) {
         AnimatorSet animatorSet = new AnimatorSet();
 
-//        Log.d(CircleRectView.class.getSimpleName(), "startHeight =" + startHeight
-//                + ", startWidth =" + startWidth
-//                + ", endHeight = " + endHeight
-//                + " endWidth =" + endWidth);
+        Log.d(CircleRectView.class.getSimpleName(), "startHeight =" + startHeight
+                + ", startWidth =" + startWidth
+                + ", endHeight = " + endHeight
+                + " endWidth =" + endWidth);
 
         ValueAnimator heightAnimator = ValueAnimator.ofInt(startHeight, endHeight);
         ValueAnimator widthAnimator = ValueAnimator.ofInt(startWidth, endWidth);
@@ -87,7 +92,7 @@ public class CircleRectView extends ImageView {
             ViewGroup.LayoutParams layoutParams = getLayoutParams();
             layoutParams.height = val;
 
-//            Log.d(CircleRectView.class.getSimpleName(), "height updated =" + val);
+            Log.d(CircleRectView.class.getSimpleName(), "height updated =" + val);
 
             setLayoutParams(layoutParams);
             requestLayoutSupport();
@@ -106,7 +111,7 @@ public class CircleRectView extends ImageView {
         if (startWidth < endWidth) {
             radiusAnimator = ValueAnimator.ofFloat(circleRadius, 0);
         } else {
-            radiusAnimator = ValueAnimator.ofFloat(0, circleRadius);
+            radiusAnimator = ValueAnimator.ofFloat(cornerRadius, circleRadius);
         }
 
         radiusAnimator.setInterpolator(new AccelerateInterpolator());
@@ -138,29 +143,6 @@ public class CircleRectView extends ImageView {
         bitmapRect = new RectF(0, 0, w, h);
     }
 
-
-    private Bitmap getBitmapFromDrawable(Drawable drawable) {
-        if (drawable == null) {
-            return null;
-        }
-
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
-        }
-
-        try {
-            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
-
-            Canvas canvas = new Canvas(bitmap);
-            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            drawable.draw(canvas);
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -174,17 +156,8 @@ public class CircleRectView extends ImageView {
             return;
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            setLayerType(LAYER_TYPE_SOFTWARE, null);
-        }
-
         clipPath.reset();
-        if (Math.abs(cornerRadius + cornerRadius - bitmapRect.height()) < eps) {
-            clipPath.addCircle(bitmapRect.centerX(), bitmapRect.centerY(), cornerRadius, Path.Direction.CW);
-        } else {
-            clipPath.addRoundRect(bitmapRect, cornerRadius, cornerRadius, Path.Direction.CW);
-        }
+        clipPath.addRoundRect(bitmapRect, cornerRadius, cornerRadius, Path.Direction.CW);
 
         canvas.clipPath(clipPath);
         super.onDraw(canvas);
